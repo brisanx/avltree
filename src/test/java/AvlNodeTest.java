@@ -46,4 +46,16 @@ public class AvlNodeTest {
     node.setHeight(expectedHeight);
     assertEquals("Height is different from expected.", expectedHeight, node.getHeight());
   }
+
+  @Test
+  public void testOnlyHaveARightChild(){
+    assertFalse("testOnlyHaveARightChild", node.hasOnlyARightChild());
+    node.setLeft(new AvlNode<>(2));
+    assertFalse("testOnlyHaveARightChild", node.hasOnlyARightChild());
+
+    AvlNode<Integer> newNode = new AvlNode<Integer>(1);
+    newNode.setRight(new AvlNode<>(1));
+
+    assertTrue("testOnlyHaveARightChild", newNode.hasOnlyARightChild());
+  }
 }

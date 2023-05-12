@@ -1,12 +1,16 @@
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 
 import java.util.Comparator;
+import java.util.Optional;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.uma.ajnebro.AvlNode;
 import org.uma.ajnebro.AvlTree;
 
@@ -697,5 +701,43 @@ public class AvlTreeTest {
 
     avlTree.delete(20);
     assertEquals("testDeletingTopNode", " | 12 | 8 | 4 | 10 | 22 | 14 | 24", avlTree.toString());
+  }
+
+  @Test
+  public void testInsertObjectInEmptyTree(){
+    //Given
+    Integer item1 = 42;
+    Integer item2 = 20;
+    Integer item3 = 56;
+
+    //When
+    avlTree.insert(item1);
+    avlTree.insert(item2);
+    avlTree.insert(item3);
+
+    //Then
+    assertEquals(item1, avlTree.getTop().getItem());
+    assertEquals(item2, avlTree.getTop().getLeft().getItem());
+    assertEquals(item3, avlTree.getTop().getRight().getItem());
+  }
+
+  @Test
+  public void testSearchOnEmptyTree(){
+    assertNull(avlTree.search(1));
+  }
+  @Test
+  public void testDeleteNode(){
+    // Given
+    avlTree.insert(5);
+    avlTree.insert(4);
+    avlTree.insert(7);
+    avlTree.insert(6);
+    avlTree.insert(1);
+    Integer item = 4;
+    // When
+    avlTree.deleteNode(avlTree.search(5));
+    // Then
+    assertEquals(item, avlTree.getTop().getLeft().getItem());
+
   }
 }
